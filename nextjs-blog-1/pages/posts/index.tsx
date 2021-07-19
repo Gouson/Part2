@@ -1,17 +1,32 @@
 import { NextPage } from 'next'
-// import axios from 'axios'
-// import { useEffect } from 'react';
-const PostsIndex: NextPage = () => {
-    // useEffect(() => {
-    //     axios.get('/api/v1/posts').then(response => {
-    //         console.log(response.data)
-    //     })
-    // }, []);
+import getPosts from '../../lib/posts';
+type Post = {
+    id: string;
+    date: string;
+    title: string;
+}
+type Props = {
+    posts: Post[]
+}
+const PostsIndex: NextPage<Props> = (props) => {
+    const { posts } = props
     return (
         <div>
-            Posts Index
+            <h1>文章列表</h1>
+            {posts.map(p => <div key={p.id}>
+                {p.id}
+            </div>)}
         </div>
     )
 }
 
 export default PostsIndex
+
+export const getStaticProps = async () => {
+    const posts = await getPosts()
+    return {
+        props: {
+            posts: JSON.parse(JSON.stringify(posts))
+        }
+    }
+}

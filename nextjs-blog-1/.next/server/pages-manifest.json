@@ -1,10 +1,12 @@
 {
   "/_app": "pages/_app.js",
+  "/api/hello": "pages/api/hello.js",
+  "/api/v1/posts": "pages/api/v1/posts.js",
+  "/": "pages/index.html",
+  "/posts/first-post": "pages/posts/first-post.html",
+  "/posts/index-front": "pages/posts/index-front.html",
+  "/posts": "pages/posts.js",
   "/_error": "pages/_error.js",
-<<<<<<< HEAD
   "/_document": "pages/_document.js",
-  "/posts": "pages/posts.js"
-=======
-  "/_document": "pages/_document.js"
->>>>>>> refs/remotes/origin/main
+  "/404": "pages/404.html"
 }
