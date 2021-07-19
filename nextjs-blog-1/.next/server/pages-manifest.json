@@ -1,6 +1,10 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
+<<<<<<< HEAD
   "/_document": "pages/_document.js",
   "/posts": "pages/posts.js"
+=======
+  "/_document": "pages/_document.js"
+>>>>>>> refs/remotes/origin/main
 }
