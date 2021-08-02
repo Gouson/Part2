@@ -14,11 +14,11 @@ export class CreateComments1627890376988 implements MigrationInterface {
                     isPrimary: true
                 },
                 {
-                    name: 'user_id',
+                    name: 'userId',
                     type: 'int'
                 },
                 {
-                    name: 'post_id',
+                    name: 'postId',
                     type: 'int'
                 },
                 {

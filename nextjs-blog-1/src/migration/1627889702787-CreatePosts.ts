@@ -22,7 +22,7 @@ export class CreatePosts1627889702787 implements MigrationInterface {
                     type: 'text'
                 },
                 {
-                    name: 'author_id',
+                    name: 'authorId',
                     type: 'int'
                 }
             ]
