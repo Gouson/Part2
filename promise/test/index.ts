@@ -178,6 +178,7 @@ describe('Promise', () => {
         const promise2 = promise.then(() => { }, () => { })
         assert(promise2 instanceof Promise)
     })
+
     it("2.2.7.1 如果then(sucess,fail)中的success返回一个值x,运行[[Resolve]](promise2, x)", (done) => {
         const promise1 = new Promise((resolve) => {
             resolve()
@@ -187,7 +188,8 @@ describe('Promise', () => {
             done()
         })
     })
-    it("2.2.7.1.2 x是一个promise实例", (done) => {
+
+    it("2.2.7.1.2 success的返回值是一个promise实例", (done) => {
         const promise1 = new Promise((resolve) => {
             resolve()
         })
@@ -198,6 +200,86 @@ describe('Promise', () => {
         setTimeout(() => {
             assert(fn.called)
             done()
-        }, 1000);
+        }, 0);
     })
+    it("2.2.7.1.2 success的返回值是一个promise实例,且失败了", (done) => {
+        const promise1 = new Promise((resolve) => {
+            resolve()
+        })
+        const fn = sinon.fake()
+        const promise2 = promise1.then(() => new Promise((resolve, reject) => reject()))
+        promise2.then(null, fn)
+
+        setTimeout(() => {
+            assert(fn.called)
+            done()
+        }, 0);
+    })
+
+    it("2.2.7.1.2 fail的返回值是一个promise实例", (done) => {
+        const promise1 = new Promise((resolve, reject) => {
+            reject()
+        })
+        const fn = sinon.fake()
+        const promise2 = promise1.then(null, () => new Promise(resolve => resolve()))
+
+        promise2.then(fn)
+
+        setTimeout(() => {
+            assert(fn.called)
+            done()
+        }, 0);
+    })
+
+    it("2.2.7.1.2 fail的返回值是一个promise实例且失败", (done) => {
+        const promise1 = new Promise((resolve, reject) => {
+            reject()
+        })
+        const fn = sinon.fake()
+        const promise2 = promise1.then(null, () => new Promise((resolve, reject) => reject()))
+
+        promise2.then(null, fn)
+
+        setTimeout(() => {
+            assert(fn.called)
+            done()
+        }, 0);
+    })
+
+    it("2.2.7.2 如果success抛出一个异常e,promise2 必须被拒绝（rejected）并把e当作原因",
+        (done) => {
+            const promise1 = new Promise((resolve, reject) => {
+                resolve()
+            })
+            const fn = sinon.fake()
+            const error = new Error()
+            const promise2 = promise1.then(() => {
+                throw error
+            })
+            promise2.then(null, fn)
+            setTimeout(() => {
+                assert(fn.called)
+                assert(fn.calledWith(error))
+                done()
+            }, 0);
+        }
+    )
+    it("2.2.7.2 如果fail抛出一个异常e,promise2 必须被拒绝（rejected）并把e当作原因",
+    (done) => {
+        const promise1 = new Promise((resolve, reject) => {
+            reject()
+        })
+        const fn = sinon.fake()
+        const error = new Error()
+        const promise2 = promise1.then(null,() => {
+            throw error
+        })
+        promise2.then(null, fn)
+        setTimeout(() => {
+            assert(fn.called)
+            assert(fn.calledWith(error))
+            done()
+        }, 0);
+    }
+)
 });

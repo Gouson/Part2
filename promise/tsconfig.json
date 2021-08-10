@@ -1,5 +1,8 @@
 {
-    "compilerOptions": {
-      //"types": []
-    }
+  "compilerOptions": {
+    "types": [
+      "node",
+      "mocha"
+    ]
   }
+}
